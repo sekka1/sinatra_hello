@@ -10,5 +10,6 @@ ADD . /opt/app
 WORKDIR /opt/app
 
 EXPOSE 4567
+VOLUME ["/opt/app"]
 
 CMD ruby hello.rb -o 0.0.0.0
