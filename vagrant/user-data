@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Get latest Docker.io version
+# Docs: https://docs.docker.com/installation/ubuntulinux/#ubuntu-trusty-1404-lts-64-bit
+curl -s https://get.docker.io/ubuntu/ | sudo sh
+
+# Get the sinatra-hello app container
+docker pull garland/sinatra-hello
+
+# Startup the docker on boot
+start sinatra-hello
+
+# Adding query for monitoring non 2xx server responses
+(crontab -u root -l; echo '*/5 * * * * /bin/cat /var/log/sinatra_hello.log | grep -Pc "GET /.* HTTP/1.1\" ([1]|[3-5])" >> /tmp/monitor_count.log' ) | crontab -u root -
